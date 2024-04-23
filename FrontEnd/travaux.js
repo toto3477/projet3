@@ -28,14 +28,14 @@ recupererProjets()
 
 // fonction pour afficher automatiquement les objets recupérés sur la page
 
-async function ajoutTravauxRecuperes (travaux) {
+async function ajoutTravauxRecuperes (projets) {
 
   const galerie = document.querySelector(".gallery")
 
   galerie.innerHTML = ""
 
-  for (let i = 0; i < travaux.length; i++) {
-    const travail = travaux[i]
+  for (let i = 0; i < projets.length; i++) {
+    const travail = projets[i]
 
       const travailElement = document.createElement("figure")
 
@@ -49,11 +49,12 @@ async function ajoutTravauxRecuperes (travaux) {
 
       galerie.appendChild(travailElement)
   };
-  console.log(travaux[1])
+  console.log(projets[1])
 }
 
 // Fonction pour récupérer les catégories uniques à partir des projets
 function recupererCategories (projets) {
+
       const projetsCategorie = new Set()
 
       projets.forEach(projet => {
@@ -74,12 +75,23 @@ function recupererCategories (projets) {
       for(let i=0; i< projetsCategorie.length; i++){
         const zoneFiltres = document.querySelector(".filtres")
         const categorieElement = document.createElement("button")
+     
       categorieElement.innerText = projetsCategorie[i]
-      zoneFiltres.appendChild(categorieElement)
+      categorieElement.id = projetsCategorie[i].replace(/\s/g, '').replace(/[A-Z]/g, '').replace(/[^a-zA-Z0-9]/g, '')
       
-        console.log(categorieElement)
-      }
+      zoneFiltres.appendChild(categorieElement)
+      console.log(categorieElement.id)
     }
+  }
+
+    //function Filtrage(projets, categorieElement) {
+
+     const filtreObjet = document.getElementById("bjets")
+     const filtreAppartement = document.getElementById("ppartements")
+     const filtreHotelRestau = document.getElementById("otelsrestaurants")
+    console.log (filtreAppartement.value)
+   
+     //}
 
 
 
