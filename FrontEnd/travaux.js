@@ -1,11 +1,8 @@
-// URL de l'API
-const apiUrl = 'http://localhost:5678/api/';
-
 // Fonction pour récupérer les projets de l'architecte
 async function recupererProjets() {
   try {
     // Appel à l'API pour récupérer les projets
-    const reponse = await fetch(apiUrl + "works");
+    const reponse = await fetch("http://localhost:5678/api/works");
     
     // Vérification de la réponse HTTP
     if (!reponse.ok) {
@@ -13,8 +10,11 @@ async function recupererProjets() {
     }
 
     const projets = await reponse.json()
-    console.log(projets)
+  
     ajoutTravauxRecuperes(projets)
+    const projetsCategorie = recupererCategories(projets)
+    console.log (projetsCategorie)
+    
   } catch (error) {
     console.log("Erreur :", error.message)
 }
@@ -23,6 +23,9 @@ async function recupererProjets() {
 
 recupererProjets()
 
+
+
+// fonction pour afficher automatiquement les objets recupérés sur la page
 
 async function ajoutTravauxRecuperes (travaux) {
 
@@ -48,3 +51,24 @@ async function ajoutTravauxRecuperes (travaux) {
   console.log(travaux[1])
 }
 
+// Fonction pour récupérer les catégories uniques à partir des projets
+function recupererCategories (projets) {
+      const projetsCategorie = new Set()
+
+      projets.forEach(projet => {
+        
+           // Vérifier si la catégorie du projet existe et n'est pas vide
+          if (projet.category && projet.category.name) {
+            projetsCategorie.add(projet.category.name);
+        }
+        
+      });
+      
+      const listeCategorie = Array.from(projetsCategorie)
+      return listeCategorie
+
+    }
+
+
+
+    
