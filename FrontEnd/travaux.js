@@ -13,6 +13,7 @@ async function recupererProjets() {
   
     ajoutTravauxRecuperes(projets)
     const projetsCategorie = recupererCategories(projets)
+    afficherFiltres(projetsCategorie)
     console.log (projetsCategorie)
     
   } catch (error) {
@@ -67,6 +68,17 @@ function recupererCategories (projets) {
       const listeCategorie = Array.from(projetsCategorie)
       return listeCategorie
 
+    }
+
+    function afficherFiltres (projetsCategorie) {
+      for(let i=0; i< projetsCategorie.length; i++){
+        const zoneFiltres = document.querySelector(".filtres")
+        const categorieElement = document.createElement("button")
+      categorieElement.innerText = projetsCategorie[i]
+      zoneFiltres.appendChild(categorieElement)
+      
+        console.log(categorieElement)
+      }
     }
 
 
