@@ -1,0 +1,119 @@
+body {
+    background-color: rgb(248, 248, 245);
+	max-width: 1140px;
+	margin:auto;
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+    m
+}
+header {
+	display: flex;
+	justify-content: space-between;
+	margin: 50px 50px;
+}
+
+
+h1{
+	display: flex;
+	flex-direction: column;
+	font-family: 'Syne';
+	font-size: 22px;
+	font-weight: 800;
+	color: #B1663C
+}
+
+h1 > span {
+	font-family: 'Work Sans';
+	font-size:10px;
+	letter-spacing: 0.1em;
+;
+}
+
+h2{
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 30px;
+	color: #1D6154
+}
+nav ul {
+	display: flex;
+	align-items: center;
+	list-style-type: none;
+
+}
+nav li {
+	padding: 0 10px;
+	font-size: 1.2em;
+}
+
+#login {
+    font-weight: 600;
+}
+
+li:hover {
+	color: #B1663C;
+}
+
+.inscription {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.inscription h2 {
+    text-align: center;
+}
+
+.inputLogin {
+    display: flex;
+    flex-direction: column
+}
+
+.inputLogin input {
+    border: 0;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    width: 300px;
+    font-size: 1.2em;
+    padding: 10px;
+
+}
+
+.formInscription {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formInscription label {
+    margin-top:15px;
+    font-size: 1.1em;
+}
+
+.formInscription a {
+    color: black;
+    font-size: 1.1em;
+}
+
+
+input[type="submit"]{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+    padding: 8px 0;
+    border: 0;
+}
+
+footer nav ul {
+	display: flex;
+	justify-content: flex-end;
+	margin: 2em;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    
+}

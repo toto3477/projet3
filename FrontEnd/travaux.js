@@ -1,5 +1,5 @@
 // Fonction pour récupérer les projets de l'architecte
-async function recupererProjets() {
+async function recupererProjets(categoryId=null) {
   try {
     // Appel à l'API pour récupérer les projets
     const reponse = await fetch("http://localhost:5678/api/works");
@@ -9,12 +9,15 @@ async function recupererProjets() {
       throw new Error("Erreur lors de la récupération des projets : " + reponse.status);
     }
 
-    const projets = await reponse.json()
-  
+    const allProjets = await reponse.json()
+    let projets = []
+    if (categoryId) {
+      projets = allProjets.filter((projet) => projet.categoryId == categoryId)
+    } else {
+      projets = allProjets
+    }
+
     ajoutTravauxRecuperes(projets)
-    const projetsCategorie = recupererCategories(projets)
-    afficherFiltres(projetsCategorie)
-    console.log (projetsCategorie)
     
   } catch (error) {
     console.log("Erreur :", error.message)
@@ -23,8 +26,7 @@ async function recupererProjets() {
 }
 
 recupererProjets()
-
-
+recupererCategories()
 
 // fonction pour afficher automatiquement les objets recupérés sur la page
 
@@ -38,6 +40,7 @@ async function ajoutTravauxRecuperes (projets) {
     const travail = projets[i]
 
       const travailElement = document.createElement("figure")
+      galerie.appendChild(travailElement)
 
       const imageTravail = document.createElement("img")
       imageTravail.src = travail.imageUrl
@@ -46,52 +49,58 @@ async function ajoutTravauxRecuperes (projets) {
       const titreTravail = document.createElement("figcaption")
       titreTravail.textContent = travail.title
       travailElement.appendChild(titreTravail)
-
-      galerie.appendChild(travailElement)
+      
   };
   console.log(projets[1])
 }
 
 // Fonction pour récupérer les catégories uniques à partir des projets
-function recupererCategories (projets) {
+async function recupererCategories () {
 
-      const projetsCategorie = new Set()
-
-      projets.forEach(projet => {
-        
-           // Vérifier si la catégorie du projet existe et n'est pas vide
-          if (projet.category && projet.category.name) {
-            projetsCategorie.add(projet.category.name);
-        }
-        
-      });
-      
-      const listeCategorie = Array.from(projetsCategorie)
-      return listeCategorie
-
+  try {
+    // Appel à l'API pour récupérer les projets
+    const reponse = await fetch("http://localhost:5678/api/categories");
+    
+    // Vérification de la réponse HTTP
+    if (!reponse.ok) {
+      throw new Error("Erreur lors de la récupération des projets : " + reponse.status);
     }
 
-    function afficherFiltres (projetsCategorie) {
-      for(let i=0; i< projetsCategorie.length; i++){
-        const zoneFiltres = document.querySelector(".filtres")
-        const categorieElement = document.createElement("button")
-     
-      categorieElement.innerText = projetsCategorie[i]
-      categorieElement.id = projetsCategorie[i].replace(/\s/g, '').replace(/[A-Z]/g, '').replace(/[^a-zA-Z0-9]/g, '')
+    const categories = await reponse.json()
+  
+    afficherFiltres(categories)
+    console.log(categories)
+  } catch (error) {
+    console.log("Erreur :", error.message)
+}
+    }
+
+    function afficherFiltres (categories) {
       
+      const zoneFiltres = document.querySelector(".filtres")
+      const categorieElement = document.createElement("button")
       zoneFiltres.appendChild(categorieElement)
+      categorieElement.addEventListener("click", () => {
+        recupererProjets()
+      })
+   
+    categorieElement.innerText = "Tous"
+
+      for(let i=0; i< categories.length; i++){
+        const categorieElement = document.createElement("button")
+        zoneFiltres.appendChild(categorieElement)
+        categorieElement.addEventListener("click", () => {
+          let categoryId = categories[i].id
+          recupererProjets(categoryId)
+        })
+     
+      categorieElement.innerText = categories[i].name
+    
+      
       console.log(categorieElement.id)
     }
   }
 
-    //function Filtrage(projets, categorieElement) {
-
-     const filtreObjet = document.getElementById("bjets")
-     const filtreAppartement = document.getElementById("ppartements")
-     const filtreHotelRestau = document.getElementById("otelsrestaurants")
-    console.log (filtreAppartement.value)
-   
-     //}
 
 
 
