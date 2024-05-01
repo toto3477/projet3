@@ -1,3 +1,22 @@
+let token = localStorage.getItem("token")
+let idUser = localStorage.getItem("userId")
+let logged = false
+let allProjets = []
+//ajouter listener btnModidier c est a ce moment la que j affiche la modale et j'appel la fonction 
+function verifierAuthentification () {
+    if(token && idUser){
+      logged = true
+      document.querySelector("#btnModifier").style.display = "block"
+      
+    } else {
+      document.querySelector("#btnModifier").style.display = "none"
+
+    } 
+    
+  }
+  
+verifierAuthentification()
+
 // Fonction pour récupérer les projets de l'architecte
 async function recupererProjets(categoryId=null) {
   try {
@@ -9,7 +28,7 @@ async function recupererProjets(categoryId=null) {
       throw new Error("Erreur lors de la récupération des projets : " + reponse.status);
     }
 
-    const allProjets = await reponse.json()
+    allProjets = await reponse.json()
     let projets = []
     if (categoryId) {
       projets = allProjets.filter((projet) => projet.categoryId == categoryId)
@@ -99,6 +118,23 @@ async function recupererCategories () {
       
       console.log(categorieElement.id)
     }
+  }
+
+  function showWorksInModal () {
+    let modalBody = document.querySelector("modalBody")
+    allworks.forEach(element => {
+      let figure = document.createElement('figure')
+      let img = document.createElement("img")
+      img.src = work.imageUrl
+      let i = document.cr
+      i.classlist ="fa fa-trash"
+      figure.appendChild(img)
+      figure.appendChild(i)
+      modalBody.appendChild(figure)
+      i.addEventListene("click")
+    });
+    //parcourir all works et afficher les elements dans la fenetre modal
+    
   }
 
 

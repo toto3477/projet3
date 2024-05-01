@@ -20,7 +20,7 @@ const loginForm = document.querySelector('.formInscription');
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('.formInscription');
     
-    loginForm.addEventListener('submit', async function(event) {
+    loginForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Empêcher la soumission du formulaire par défaut
         
         // Récupérer les valeurs des champs email et password
@@ -29,20 +29,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             // Envoi de la requête POST au serveur pour vérifier les informations de connexion
-            const response = await fetch("http://localhost:5678/api/users/login", {
+            fetch("http://localhost:5678/api/users/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ email, password })
-            });
-            
-            // Vérification de la réponse du serveur
-            if (!response.ok) {
-                throw new Error('Identifiants incorrects. Veuillez réessayer.');
-            } 
-            
-            verifierAuthentification(email, password)
+            })
+            .then((response) => {
+
+                // Vérification de la réponse du serveur
+                if (!response.ok) {
+                    alert("mot de passe incorrect")
+                    throw new Error('Identifiants incorrects. Veuillez réessayer.');
+                } else {
+                    return response.json()
+
+                }
+               
+
+            })
+            .then ((data) => {
+                localStorage.setItem("token", data.token)
+                localStorage.setItem("userId", data.userId)
+                window.location.replace("index.html")
+
+            })
+            //verifierAuthentification(email, password)
 
         } catch (error) {
             // Affichage du message d'erreur

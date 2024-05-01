@@ -102,6 +102,11 @@ li img{
 li:hover {
 	color: #B1663C;
 }
+
+#btnModifier {
+
+	display: none;
+}
 #introduction {
 	display: flex;
 	align-items: center;
