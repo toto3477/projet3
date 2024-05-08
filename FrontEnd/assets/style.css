@@ -75,7 +75,7 @@ h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
+	;
 }
 
 h2{
@@ -95,16 +95,144 @@ nav li {
 	font-size: 1.2em;
 }
 
-li img{
-	
-}
 
 li:hover {
 	color: #B1663C;
 }
 
-#btnModifier {
+/* Modal */
 
+.js-modal {
+	position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 20, 20, 0.4) ;
+	display: none;
+	
+}
+.modalContent{
+	background-color: white;
+	padding: 30px 80px ;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+#modalGallery{
+    width: 500px;
+	height: 500px;
+	display: flex;
+	flex-wrap: wrap;
+    align-content: center;
+	margin-top: -15px;
+	margin-right: -50px;
+	flex-direction: column;
+	
+}
+#galleryInModal {
+	display: flex;
+	flex-wrap: wrap;
+	border-bottom: 3px solid rgb(146, 146, 146);
+	padding: 30px 0;
+}
+
+.modal-wrapper figure{
+	width: 80px;
+	height: 100px;
+	margin: 5px;
+	position: relative;
+}
+.modal-wrapper img {
+	width: 100%;
+	height: 100%
+}
+
+button.fa-solid.fa-trash-can {
+position: absolute;
+right: 0;
+background: black;
+color : white;
+}
+
+.modalContent h3 {
+	padding-top: 20px;
+	font-size: 1.3em;
+	font-weight: 500;
+	text-align : center;
+
+}
+
+.divBtnModal{
+	display: flex;
+	padding-top: 30px;
+	justify-content: center;
+}
+
+.btnModal {
+	padding: 10px;
+	background-color: #1D6154;
+	color: white;
+	border-radius: 25px;
+	font-family: 'Syne';
+	width: 300px;
+	border: none;
+}
+
+.fa-regular.fa-pen-to-square {
+	padding: 0 5px;
+	
+}
+
+.modal-wrapper label {
+	display: block;
+}
+
+.cadreNouvellePhoto {
+	margin-top: 30px;
+	background: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+ .cadreNouvellePhoto p{
+	padding: 5px 0 20px 0;
+	font-size: 0.9em;
+ }
+ .cadreNouvellePhoto label{
+	background: rgb(168, 168, 168);
+	padding: 10px;
+	border-radius: 20px;
+	color: rgb(66, 105, 190);
+	font-weight: 600;
+ }
+
+.fa-regular.fa-image{
+	font-size: 80px; 
+	color: rgb(168, 168, 168);
+	padding: 20px;
+}
+
+#validerModal{
+	background: gray;
+}
+#modalGallery {
+	display: flex;
+}
+
+#modalForm {
+	display: none;
+}
+
+
+#btnModifier {
+	border: none;
+	background: white;
 	display: none;
 }
 #introduction {
@@ -167,11 +295,10 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -215,6 +342,6 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 

@@ -2,20 +2,48 @@ let token = localStorage.getItem("token")
 let idUser = localStorage.getItem("userId")
 let logged = false
 let allProjets = []
-//ajouter listener btnModidier c est a ce moment la que j affiche la modale et j'appel la fonction 
+let allCategories = []
+let btnModidier = document.querySelector("#btnModifier")
+let btnAjoutPhoto = document.querySelector("#btnAjoutPhoto")
+let modal = document.querySelector("#modal1")
+let modalBody = document.querySelector(".modal-wrapper")
+let modalContent = document.querySelector(".modalContent")
+let divBtnModal = document.querySelector(".divBtnModal")
+let galleryInModal = document.querySelector("#galleryInModal")
+let modalGallery = document.querySelector("#modalGallery")
+let modalForm = document.querySelector("#modalForm")
+
+
 function verifierAuthentification () {
-    if(token && idUser){
-      logged = true
-      document.querySelector("#btnModifier").style.display = "block"
+  if(token && idUser){
+    logged = true
+      btnModidier.style.display = "inline"
       
     } else {
-      document.querySelector("#btnModifier").style.display = "none"
+      btnModidier.style.display = "none"
 
     } 
     
   }
+  verifierAuthentification()
+
+  btnModidier.addEventListener("click", () => {
+    modal.style.display = "flex"
+    showWorksInModal()
+  })
+
+  btnAjoutPhoto.addEventListener("click", () =>{
+    modalGallery.style.display = "none"  
+    modalForm.style.display = "block"  
+    
+
+    /*parcourir categorie et ajouter a id select*/
+
   
-verifierAuthentification()
+
+  })
+
+
 
 // Fonction pour récupérer les projets de l'architecte
 async function recupererProjets(categoryId=null) {
@@ -86,7 +114,8 @@ async function recupererCategories () {
     }
 
     const categories = await reponse.json()
-  
+    allCategories = categories
+
     afficherFiltres(categories)
     console.log(categories)
   } catch (error) {
@@ -120,24 +149,36 @@ async function recupererCategories () {
     }
   }
 
-  function showWorksInModal () {
-    let modalBody = document.querySelector("modalBody")
-    allworks.forEach(element => {
+function showWorksInModal () {
+
+    galleryInModal.innerHTML =""
+
+    allProjets.forEach(projet => {
       let figure = document.createElement('figure')
       let img = document.createElement("img")
-      img.src = work.imageUrl
-      let i = document.cr
-      i.classlist ="fa fa-trash"
-      figure.appendChild(img)
+      img.src = projet.imageUrl
+      let i = document.createElement("button")
+      i.classList = "fa-solid fa-trash-can"
       figure.appendChild(i)
-      modalBody.appendChild(figure)
-      i.addEventListene("click")
+      figure.appendChild(img)
+      galleryInModal.appendChild(figure)
+      i.addEventListener("click" , () => {
+        figure.remove()
+      })
     });
-    //parcourir all works et afficher les elements dans la fenetre modal
     
   }
+    //parcourir all works et afficher les elements dans la fenetre modal
+    
+    modal.addEventListener("click", function(event) {
+      if (event.target == modal ) {
+        modal.style.display = "none";
+      }
+    });
 
+    function ajoutNouveauProjet(){
 
-
+    }
+  
 
     
