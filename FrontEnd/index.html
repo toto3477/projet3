@@ -57,7 +57,7 @@
 						</div>
 						
 					</div>
-					<div id="modalForm">
+					<form id="modalForm">
 						
 						<h3 >Ajout photo</h3>
 						<div class="cadreNouvellePhoto">
@@ -68,14 +68,19 @@
 							<input type="file" accept="image/png" id="imageInput"  style="display: none;" >
 							<p>jpg, png: 4mo max</p>
 						</div>
-							<label for="inputTitle"></label>
+						<div class="previewPhoto"></div>
+						<div class="inputAjoutPhoto">
+							<label for="inputTitle">Titre</label>
 							<input type="text" id="inputTitle">
 							<label for="selectCategorie">Catégorie</label>
-							<select id="selectCategorie"></select>
-						<div class="divBtnModal">
-							<button class="btnModal" id="validerModal">Valider</button>			
+							<select id="selectCategorie">
+								<option value=""> </option>
+							</select>
 						</div>
-					</div>
+						<div class="divBtnModal">
+							<button type="reset" class="btnModal" id="validerModal">Valider</button>			
+						</div>
+					</form>
 				</div>
 
 			</div>

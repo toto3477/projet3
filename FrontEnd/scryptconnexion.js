@@ -1,9 +1,5 @@
 
 
-
-
-
-
 function verifierAuthentification (email, password,) {
 
     const loginForm = document.querySelector('.formInscription');

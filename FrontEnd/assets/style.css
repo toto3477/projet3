@@ -150,7 +150,7 @@ li:hover {
 }
 .modal-wrapper img {
 	width: 100%;
-	height: 100%
+	height: 100%;
 }
 
 button.fa-solid.fa-trash-can {
@@ -194,29 +194,56 @@ color : white;
 }
 
 .cadreNouvellePhoto {
-	margin-top: 30px;
+	margin: 30px 0;
 	background: #E8F1F6;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
- .cadreNouvellePhoto p{
+.previewPhoto {
+    margin: 30px 0;
+    background: #E8F1F6;
+    display: none;
+    text-align: center;
+    padding: 30px;
+}
+.previewPhoto img{
+	width: 200px;
+	height: 200px;
+}
+
+.cadreNouvellePhoto p{
 	padding: 5px 0 20px 0;
 	font-size: 0.9em;
- }
- .cadreNouvellePhoto label{
+}
+.cadreNouvellePhoto label{
 	background: rgb(168, 168, 168);
 	padding: 10px;
 	border-radius: 20px;
 	color: rgb(66, 105, 190);
 	font-weight: 600;
- }
+}
 
 .fa-regular.fa-image{
 	font-size: 80px; 
 	color: rgb(168, 168, 168);
 	padding: 20px;
 }
+#inputTitle{
+	width: 93%;
+	padding: 10px;
+	margin: 10px 0;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+}
+#selectCategorie{
+	border: none;
+	padding: 10px;
+	width: 100%;
+	margin: 10px 0;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+}
+
 
 #validerModal{
 	background: gray;
@@ -228,6 +255,7 @@ color : white;
 #modalForm {
 	display: none;
 }
+
 
 
 #btnModifier {
