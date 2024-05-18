@@ -21,6 +21,8 @@ let inputTitle = document.querySelector("#inputTitle")
 let BtnValiderModal = document.querySelector("#validerModal")
 let previewPhoto = document.querySelector(".previewPhoto")
 let navLogin = document.getElementById("navLogin")
+let btnPrevious =document.getElementById("previous")
+let btnClose =document.querySelectorAll(".close-btn")
 
          /*AUTHENTIFICATION*/
 
@@ -280,13 +282,21 @@ btnModidier.addEventListener("click", () => {
 btnAjoutPhoto.addEventListener("click", () =>{
   modalGallery.style.display = "none"  
   modalForm.style.display = "block"  
+  btnPrevious.style.display = "inline"
+  
 })
 
 modal.addEventListener("click", function(event) {
-  if (event.target == modal ) {
+  if (event.target == modal) modal.style.display = "none"; 
+});
+btnClose.forEach(button => {
+  button.addEventListener("click", () => {
     modal.style.display = "none";
-    
-  }
+  });
+});
+btnPrevious.addEventListener("click", () => {
+  modalGallery.style.display = "block"  
+  modalForm.style.display = "none"  
 });
 
 imageInput.addEventListener("change", () => {
@@ -319,15 +329,24 @@ imageInput.addEventListener("change", () => {
     }
 })
 
-if (inputTitle.value && selectCategorie.value &&imageInput.files[0] )
+function changementCouleurBoutonValider (){
+  if (inputTitle.value && selectCategorie.value && imageInput.files.length > 0){
+    BtnValiderModal.style.background = "#1D6154"
+  }
+}
+
+inputTitle.addEventListener("input", changementCouleurBoutonValider)
+imageInput.addEventListener("change", changementCouleurBoutonValider)
+selectCategorie.addEventListener("change", changementCouleurBoutonValider)
 
 BtnValiderModal.addEventListener("click", () => {
-  
-  let data = new FormData()
-  data.append("title",document.querySelector("#inputTitle").value)
-  data.append("category",document.querySelector("#selectCategorie").value)
-  data.append("image",document.querySelector("#imageInput").files[0])
-  enregistrerNouveauProjet(data)
+  if (inputTitle.value && selectCategorie.value && imageInput.files.length > 0){
+    let data = new FormData()
+    data.append("title",document.querySelector("#inputTitle").value)
+    data.append("category",document.querySelector("#selectCategorie").value)
+    data.append("image",document.querySelector("#imageInput").files[0])
+    enregistrerNouveauProjet(data)
+  } else alert("Veuillez remplir tout les champs")
 })
 
 /*let nouvelElement = {
