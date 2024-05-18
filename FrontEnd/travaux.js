@@ -20,48 +20,33 @@ let cadreNouvellePhoto = document.querySelector(".cadreNouvellePhoto")
 let inputTitle = document.querySelector("#inputTitle")
 let BtnValiderModal = document.querySelector("#validerModal")
 let previewPhoto = document.querySelector(".previewPhoto")
+let navLogin = document.getElementById("navLogin")
 
          /*AUTHENTIFICATION*/
 
+navLogin.addEventListener("click", () => {
+  if (logged === true){
+    logged = false
+    token = ""
+    idUser = ""
+    navLogin.innerHTML = "Login"
+    btnModidier.style.display = "none"
+  } else  window.location.replace("connexion.html")
+})
 
 function verifierAuthentification () {
   if(token && idUser){
     logged = true
-      btnModidier.style.display = "inline"
-      
+    navLogin.innerHTML = "Logout"
+    btnModidier.style.display = "inline"      
     } else {
-      btnModidier.style.display = "none"
-
+    btnModidier.style.display = "none"
     } 
     
 }
 
-async function verifierAutorisation() {
-  try {
-    const response = await fetch("http://localhost:5678/api/works", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Inclure le jeton d'accès dans l'en-tête Authorization
-      },
-      body: JSON.stringify({ })
-    });
-
-    if (response.ok) {
-      let data = await response.json();
-      console.log(data);
-    } else {
-    
-      throw new Error('Erreur lors de la requête : ' + response.status);
-    }
-  } catch (error) {
-    
-    console.error('Erreur lors de la requête :', error);
-  }
-}
   
 verifierAuthentification()
-verifierAutorisation()
 
   
   
@@ -195,20 +180,39 @@ function showWorksInModal () {
       figure.appendChild(img)
       galleryInModal.appendChild(figure)
       i.addEventListener("click" , () => {
-        figure.remove()
+        let confirmation = confirm("Voulez vous reelement supprimer ce projet?")
+        if (confirmation) supprimerProjet(projet)
+
       })
     });
 }
 
 async function supprimerProjet(projet){
 
+  try {
+    const response = await fetch(` http://localhost:5678/api/works/${projet.id} `, {
+        method: "DELETE",
+        headers: {
+            "Authorization" : `Bearer ${token}`
+        },
+
+    });
     
+    if (response.ok) {
+        console.log("Le nouveau projet a été enregistré avec succès dans la base de données.");
+      } else {
+        console.error("Erreur lors de l'enregistrement du nouveau projet dans la base de données.");
+    }
+  } catch (error) {
+  console.error("Erreur lors de la requête HTTP :", error);
+}
 }
     
 
       
   
 function ajouterNouveauProjet (nouvelElement){
+
     allProjets.push(nouvelElement)
     showWorksInModal()
     modalGallery.style.display = "block"  
@@ -222,9 +226,9 @@ async function enregistrerNouveauProjet(nouvelElement) {
       const response = await fetch("http://localhost:5678/api/works", {
           method: "POST",
           headers: {
-              "Content-Type": "application/json"
+              "Authorization" : `Bearer ${token}`
           },
-          body: JSON.stringify(nouvelElement)
+          body: nouvelElement
       });
       
       if (response.ok) {
@@ -268,6 +272,8 @@ function prochainId() {
     
 btnModidier.addEventListener("click", () => {
   modal.style.display = "flex"
+  modalGallery.style.display = "block"  
+  modalForm.style.display = "none"  
   showWorksInModal()
 })
 
@@ -313,24 +319,33 @@ imageInput.addEventListener("change", () => {
     }
 })
 
+if (inputTitle.value && selectCategorie.value &&imageInput.files[0] )
+
 BtnValiderModal.addEventListener("click", () => {
-  let nouvelElement = {
-    category : {
-      id: parseInt(selectCategorie.value),
-      name: getNomCategorie(selectCategorie.value)
-    },
-    categoryId: parseInt(selectCategorie.value),
-    id: prochainId(),
-    imageUrl: recupererImageUrl(),
-    title: inputTitle.value,
-    userId: 1
-  }
-  ajouterNouveauProjet(nouvelElement) 
-      console.log(nouvelElement)
-      enregistrerNouveauProjet(nouvelElement)
-      cadreNouvellePhoto.style.display = "flex"
-      previewPhoto.style.display = "none"
-      previewPhoto.innerHTML = "" 
-      
-    
+  
+  let data = new FormData()
+  data.append("title",document.querySelector("#inputTitle").value)
+  data.append("category",document.querySelector("#selectCategorie").value)
+  data.append("image",document.querySelector("#imageInput").files[0])
+  enregistrerNouveauProjet(data)
 })
+
+/*let nouvelElement = {
+  category : {
+    id: parseInt(selectCategorie.value),
+    name: getNomCategorie(selectCategorie.value)
+  },
+  categoryId: parseInt(selectCategorie.value),
+  id: prochainId(),
+  imageUrl: recupererImageUrl(),
+  title: inputTitle.value,
+  userId: 1
+}
+ajouterNouveauProjet(nouvelElement) 
+    console.log(nouvelElement)
+    enregistrerNouveauProjet(nouvelElement)
+    cadreNouvellePhoto.style.display = "flex"
+    previewPhoto.style.display = "none"
+    previewPhoto.innerHTML = "" */
+    
+  
