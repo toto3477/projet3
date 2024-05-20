@@ -190,18 +190,15 @@ function showWorksInModal () {
 }
 
 async function supprimerProjet(projet){
-
   try {
     const response = await fetch(` http://localhost:5678/api/works/${projet.id} `, {
         method: "DELETE",
         headers: {
             "Authorization" : `Bearer ${token}`
         },
-
-    });
-    
+    });   
     if (response.ok) {
-        console.log("Le nouveau projet a été enregistré avec succès dans la base de données.");
+        recupererProjets()
       } else {
         console.error("Erreur lors de l'enregistrement du nouveau projet dans la base de données.");
     }
@@ -209,21 +206,8 @@ async function supprimerProjet(projet){
   console.error("Erreur lors de la requête HTTP :", error);
 }
 }
-    
-
-      
-  
-function ajouterNouveauProjet (nouvelElement){
-
-    allProjets.push(nouvelElement)
-    showWorksInModal()
-    modalGallery.style.display = "block"  
-    modalForm.style.display = "none" 
-  return allProjets
-}
 
 async function enregistrerNouveauProjet(nouvelElement) {
-  console.log(nouvelElement)
   try {
       const response = await fetch("http://localhost:5678/api/works", {
           method: "POST",
@@ -232,9 +216,8 @@ async function enregistrerNouveauProjet(nouvelElement) {
           },
           body: nouvelElement
       });
-      
       if (response.ok) {
-          console.log("Le nouveau projet a été enregistré avec succès dans la base de données.");
+          recupererProjets()
         } else {
           console.error("Erreur lors de l'enregistrement du nouveau projet dans la base de données.");
       }
@@ -243,35 +226,6 @@ async function enregistrerNouveauProjet(nouvelElement) {
   }
 }
 
-function recupererImageUrl() {
-  let nouvelUrl = ""
-  if (imageInput.files.length > 0) {
-    nouvelUrl = URL.createObjectURL(imageInput.files[0]);
-    console.log(nouvelUrl)
-    return nouvelUrl
-  }  
-}
-
-function getNomCategorie(categoryId){
-  console.log(categoryId)
-  switch(categoryId){
-    case "1" : return "Objets"
-    break
-    case "2" : return "Appartements"
-    break
-    case "3" : return "Hotels && restaurants"
-    break
-    default : return ""
-  }
-}
-
-function prochainId() {
-  let nouvelleId = allProjets.length + 1
-  return nouvelleId
-}
-  
-
-    
 btnModidier.addEventListener("click", () => {
   modal.style.display = "flex"
   modalGallery.style.display = "block"  
@@ -319,7 +273,6 @@ imageInput.addEventListener("change", () => {
 
           // Effacement du contenu existant du cadre
           cadreNouvellePhoto.style.display = "none"
-          console.log(previewPhoto)
           previewPhoto.style.display = "block"
           // Ajout de l'image à l'intérieur du cadre
           previewPhoto.appendChild(imageElement)
@@ -346,25 +299,7 @@ BtnValiderModal.addEventListener("click", () => {
     data.append("category",document.querySelector("#selectCategorie").value)
     data.append("image",document.querySelector("#imageInput").files[0])
     enregistrerNouveauProjet(data)
-  } else alert("Veuillez remplir tout les champs")
-})
-
-/*let nouvelElement = {
-  category : {
-    id: parseInt(selectCategorie.value),
-    name: getNomCategorie(selectCategorie.value)
-  },
-  categoryId: parseInt(selectCategorie.value),
-  id: prochainId(),
-  imageUrl: recupererImageUrl(),
-  title: inputTitle.value,
-  userId: 1
-}
-ajouterNouveauProjet(nouvelElement) 
-    console.log(nouvelElement)
-    enregistrerNouveauProjet(nouvelElement)
     cadreNouvellePhoto.style.display = "flex"
     previewPhoto.style.display = "none"
-    previewPhoto.innerHTML = "" */
-    
-  
+  } else alert("Veuillez remplir tout les champs")
+})
