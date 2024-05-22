@@ -126,6 +126,7 @@ li:hover {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	border-radius: 15px;
 
 }
 
@@ -143,7 +144,7 @@ li:hover {
 #galleryInModal {
 	display: flex;
 	flex-wrap: wrap;
-	border-bottom: 3px solid rgb(146, 146, 146);
+	border-bottom: 3px solid rgb(146 146 146 / 68%);
 	padding: 30px 0;
     margin-right: 50px;
 }
@@ -160,16 +161,17 @@ li:hover {
 }
 
 button.fa-solid.fa-trash-can {
-position: absolute;
-right: 0;
-background: black;
-color : white;
+	margin-top: 5px;
+	position: absolute;
+	right: 5px;
+	background: black;
+	color : white;
 }
 
 .modalContent h3 {
 
 	font-size: 1.3em;
-	font-weight: 500;
+	font-weight: 600;
 	text-align : center;
 
 }
@@ -223,16 +225,16 @@ color : white;
 	font-size: 0.9em;
 }
 .cadreNouvellePhoto label{
-	background: rgb(168, 168, 168);
-	padding: 10px;
+	background: rgba(117, 122, 131, 0.356);
+	padding: 10px 30px;
 	border-radius: 20px;
-	color: rgb(66, 105, 190);
+	color: rgb(43, 88, 124);
 	font-weight: 600;
 }
 
 .fa-regular.fa-image{
 	font-size: 80px; 
-	color: rgb(168, 168, 168);
+	color: rgba(117, 122, 131, 0.356);
 	padding: 20px;
 }
 #inputTitle{
@@ -252,7 +254,7 @@ color : white;
 
 
 #validerModal{
-	background: gray;
+	background: rgb(146 146 146 / 68%);
 }
 #modalGallery #close{
 	font-size: 1.4em;
@@ -275,11 +277,17 @@ color : white;
 #modalGallery {
 	display: flex;
 }
+#modalGallery h3 {
+	padding-right: 50px;
+}
+
 
 #modalForm {
 	display: none;
 }
-
+#btnAjoutPhoto {
+	margin-right: 40px;
+}
 
 
 #btnModifier {

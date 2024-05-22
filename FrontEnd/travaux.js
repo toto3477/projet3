@@ -1,5 +1,4 @@
 let token = localStorage.getItem("token")
-console.log(token)
 let idUser = localStorage.getItem("userId")
 
 let logged = false
@@ -58,8 +57,7 @@ async function recupererProjets(categoryId=null) {
 
     // Appel à l'API pour récupérer les projets
     const reponse = await fetch("http://localhost:5678/api/works");
-    
-    // Vérification de la réponse HTTP
+
     if (!reponse.ok) {
       throw new Error("Erreur lors de la récupération des projets : " + reponse.status);
     }
@@ -70,7 +68,6 @@ async function recupererProjets(categoryId=null) {
       projets = allProjets.filter((projet) => projet.categoryId == categoryId)
     } else {
       projets = allProjets
-      console.log(projets)
     }
 
     ajoutTravauxRecuperes(projets)
@@ -83,8 +80,6 @@ async function recupererProjets(categoryId=null) {
 
 recupererProjets()
 recupererCategories()
-
-// fonction pour afficher automatiquement les objets recupérés sur la page
 
 async function ajoutTravauxRecuperes (projets) {
   
@@ -106,18 +101,14 @@ async function ajoutTravauxRecuperes (projets) {
       titreTravail.textContent = travail.title
       travailElement.appendChild(titreTravail)
       
-    };
-    
+    };   
   }
 
-// Fonction pour récupérer les catégories uniques à partir des projets
 async function recupererCategories () {
   
   try {
-    // Appel à l'API pour récupérer les projets
     const reponse = await fetch("http://localhost:5678/api/categories");
-    
-    // Vérification de la réponse HTTP
+
     if (!reponse.ok) {
       throw new Error("Erreur lors de la récupération des projets : " + reponse.status);
     }
@@ -149,13 +140,9 @@ function afficherFiltres (categories) {
         categorieElement.addEventListener("click", () => {
           let categoryId = categories[i].id
           selectCategorie += categories[i].name
-          console.log(selectCategorie)
           recupererProjets(categoryId)
-        })
-     
-        categorieElement.innerText = categories[i].name
-        
-        
+        })    
+        categorieElement.innerText = categories[i].name        
       }
       categories.forEach(categorie => {
         let option = document.createElement("option");
@@ -169,7 +156,6 @@ function afficherFiltres (categories) {
 
                 
 function showWorksInModal () {
-    
     galleryInModal.innerHTML =""
     
     allProjets.forEach(projet => {
@@ -183,7 +169,10 @@ function showWorksInModal () {
       galleryInModal.appendChild(figure)
       i.addEventListener("click" , () => {
         let confirmation = confirm("Voulez vous reelement supprimer ce projet?")
-        if (confirmation) supprimerProjet(projet)
+        if (confirmation){
+          supprimerProjet(projet)
+          figure.remove()
+        } 
 
       })
     });
@@ -218,6 +207,7 @@ async function enregistrerNouveauProjet(nouvelElement) {
       });
       if (response.ok) {
           recupererProjets()
+          emptyForm()
         } else {
           console.error("Erreur lors de l'enregistrement du nouveau projet dans la base de données.");
       }
@@ -246,37 +236,39 @@ modal.addEventListener("click", function(event) {
 btnClose.forEach(button => {
   button.addEventListener("click", () => {
     modal.style.display = "none";
+    emptyForm()
   });
 });
 btnPrevious.addEventListener("click", () => {
+  showWorksInModal()
   modalGallery.style.display = "block"  
-  modalForm.style.display = "none"  
+  modalForm.style.display = "none" 
+ emptyForm()
 });
+function emptyForm (){
+  cadreNouvellePhoto.style.display = "flex"
+  previewPhoto.style.display = "none"
+  previewPhoto.innerHTML= ""
+  imageInput.value = "" 
+  inputTitle.value = ""
+  selectCategorie.value = ""
+  changementCouleurBoutonValider()
+}
 
 imageInput.addEventListener("change", () => {
-  // Vérification qu'un fichier a été sélectionné
   if (imageInput.files && imageInput.files[0]) {
-      const file = imageInput.files[0];
-
-      
+      const file = imageInput.files[0];   
       // Création d'un objet FileReader pour lire le fichier
       const reader = new FileReader();
 
       reader.onload = function (e) {
-        console.log("Contenu du fichier lu avec succès !");
-
-          // Création d'une balise <img> pour afficher l'aperçu de l'image
           let imageElement = document.createElement('img');
-          console.log(imageElement)
           imageElement.src = e.target.result;
           imageElement.alt = "Aperçu de l'image"
 
-          // Effacement du contenu existant du cadre
           cadreNouvellePhoto.style.display = "none"
           previewPhoto.style.display = "block"
-          // Ajout de l'image à l'intérieur du cadre
           previewPhoto.appendChild(imageElement)
-
       };
       reader.readAsDataURL(file)
     }
@@ -285,6 +277,8 @@ imageInput.addEventListener("change", () => {
 function changementCouleurBoutonValider (){
   if (inputTitle.value && selectCategorie.value && imageInput.files.length > 0){
     BtnValiderModal.style.background = "#1D6154"
+  } else {
+    BtnValiderModal.style.background = "rgb(146 146 146 / 68%)"
   }
 }
 
